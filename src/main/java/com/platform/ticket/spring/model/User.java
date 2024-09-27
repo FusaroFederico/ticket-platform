@@ -1,14 +1,20 @@
 package com.platform.ticket.spring.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -54,6 +60,15 @@ public class User {
 	@Column(name = "registration_date", nullable = false, updatable = false)
 	@CreationTimestamp
 	private LocalDateTime registrationDate;
+	
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
+	private List<Ticket> tickets;
+	
+	@OneToMany(mappedBy = "note", cascade = { CascadeType.REMOVE })
+	private List<Note> notes;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Role> roles;
 	
 	// Getters and Setters
 	public Integer getId() {
@@ -122,6 +137,30 @@ public class User {
 
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

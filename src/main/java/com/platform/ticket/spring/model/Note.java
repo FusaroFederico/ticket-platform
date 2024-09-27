@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -35,6 +37,14 @@ public class Note {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "ticket_id", nullable = false)
+	private Ticket ticket;
+	
 	// Getters and Setters
 	public Integer getId() {
 		return id;
@@ -66,6 +76,22 @@ public class Note {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
 	}
 	
 }

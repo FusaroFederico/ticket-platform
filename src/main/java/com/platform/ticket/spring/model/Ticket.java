@@ -1,15 +1,20 @@
 package com.platform.ticket.spring.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +50,13 @@ public class Ticket {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	
+	@OneToMany(mappedBy = "note", cascade = { CascadeType.REMOVE })
+	private List<Note> notes;
+	
 	// Getters and Setters
 	public Integer getId() {
 		return id;
@@ -93,4 +105,21 @@ public class Ticket {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+	
 }
