@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:fragment="head(title)">
+			<!-- Required meta tags -->
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			
+			<!-- Bootstrap CSS -->
+			<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+			
+			<!-- My CSS -->
+			<link th:rel="stylesheet" th:href="@{/css/style.css}"/>
+						
+			<title th:text="${title}"></title>
+		</th:block>
+	</head>
+	<body>
+		<!-- Header -->
+		<header th:fragment="header">
+			<div class="text-center bg-body-secondary py-2 mb-3">
+				<span class="fs-2">Ticket Platform</span>
+			</div>
+		</header>
+		<!-- Sidebar -->
+		<th:block th:fragment="sidebar">
+			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-secondary" id="sidebar">
+			    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+			      <span class="fs-4">Sidebar</span>
+			    </a>
+			    <hr>
+			    <ul class="nav nav-pills flex-column mb-auto">
+			      <li class="nav-item">
+			        <a href="#" class="nav-link active" aria-current="page">
+			          Home
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#" class="nav-link link-body-emphasis">
+			          Tickets
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#" class="nav-link link-body-emphasis">
+			          Operators
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#" class="nav-link link-body-emphasis">
+			          Notes
+			        </a>
+			      </li>
+			    </ul>
+			    <hr>
+			    <div class="dropdown">
+			      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+			        <strong>utente x</strong>
+			      </a>
+			      <ul class="dropdown-menu text-small shadow">
+			        <li><a class="dropdown-item" href="#">New project...</a></li>
+			        <li><a class="dropdown-item" href="#">Settings</a></li>
+			        <li><a class="dropdown-item" href="#">Profile</a></li>
+			        <li><hr class="dropdown-divider"></li>
+			        <li><a class="dropdown-item" href="#">Log out</a></li>
+			      </ul>
+			    </div>
+			  </div>
+		</th:block>
+		<!-- Scripts -->
+		<th:block th:fragment="scripts">
+			<!-- Bootstrap JS -->
+			<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+		</th:block>
+	</body>
+</html>
