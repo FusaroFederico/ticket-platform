@@ -54,7 +54,7 @@ public class Ticket {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
-	@OneToMany(mappedBy = "note", cascade = { CascadeType.REMOVE })
+	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
 	private List<Note> notes;
 	
 	// Getters and Setters

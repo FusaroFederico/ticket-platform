@@ -64,7 +64,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
 	private List<Ticket> tickets;
 	
-	@OneToMany(mappedBy = "note", cascade = { CascadeType.REMOVE })
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
 	private List<Note> notes;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
