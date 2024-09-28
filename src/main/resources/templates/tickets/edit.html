@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Crea Ticket')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Crea Ticket')}"></th:block>
+		<!-- Content -->
+        <div class="container text-center col-6">
+            <h1 class="mt-4 mb-3">Aggiorna il ticket N°[[ ${ticket.id} ]]</h1>
+			<!-- Form -->
+			<form 
+				id="ticket-form" 
+				method="POST" 
+				th:action="@{/tickets/edit/{id}(id = ${ticket.id})}" 
+				th:object="${ticket}"
+				>
+				
+				<div class="mb-3">
+					  <label for="ticket-title" class="form-label fw-medium">Oggetto del ticket:</label>
+					  <input type="text" class="form-control" id="ticket-title" placeholder="Errore di login" th:field="*{title}"
+					  			 th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="mb-3">
+					  <label for="ticket-description" class="form-label fw-medium">Descrizione:</label>
+					  <textarea class="form-control" id="ticket-description" rows="3"  th:field="*{description}" 
+					  			th:errorClass="is-invalid"></textarea>
+					  <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="mb-3">
+					<p class="fs-6 fw-medium mb-1">Status:</p>
+					<input type="radio" class="btn-check" name="ticket-status" id="option1" value="da fare" autocomplete="off" th:field="*{status}">
+					<label class="btn btn-outline-danger" for="option1">Da fare</label>
+
+					<input type="radio" class="btn-check" name="ticket-status" id="option2" value="in corso" autocomplete="off" th:field="*{status}">
+					<label class="btn btn-outline-warning" for="option2">In corso</label>
+
+					<input type="radio" class="btn-check" name="ticket-status" id="option3" value="completato" autocomplete="off" th:field="*{status}">
+					<label class="btn btn-outline-success" for="option3">Completato</label>
+				</div>
+				
+				<!-- <div class="mb-3">
+					<label for="ticket-operator" class="form-label fw-medium">Assegna un operatore:</label>
+					<select class="form-select" id="ticket-operator" th:field="*{user}">
+						<option th:each=" i : ${#numbers.sequence(0, 10)} " th:value="${i}" th:text="${i}">
+						    </option>
+					</select>
+				</div> -->
+	
+				<div class="mb-3 d-flex justify-content-center pt-4">
+					<button type="submit" class="btn btn-primary">Aggiorna Ticket</button>
+				</div>
+			</form>
+			<!-- /Form -->
+        </div>
+		<!-- /Content -->
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>
