@@ -14,7 +14,8 @@
         <div class="container text-center px-4">
             <h1 class="mt-4 mb-3">Lista dei Ticket</h1>
 			<!-- Search bar -->
-			<div class="d-flex justify-content-end align-items-baseline mb-3">
+			<div class="col-10 d-flex justify-content-end align-items-baseline mb-3 mx-auto">
+				<a th:href="@{/tickets/create}" class="btn btn-primary me-auto" role="button">Crea nuovo ticket</a>
 				<span class="fs-5 me-2">Filtra ticket per oggetto:</span>
 			
 				<form class="d-flex" role="search" method="GET" th:action="@{/tickets}">
