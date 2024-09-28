@@ -54,15 +54,16 @@ public class TicketController {
 	}
 	
 	@PostMapping("/create")
-	public String store(@Valid @ModelAttribute("ticket") Ticket newTicket,
+	public String store(@Valid @ModelAttribute("ticket") Ticket ticket,
 						BindingResult bindingResult,
 						RedirectAttributes redirectAttributes) {
 		
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() && ticket.getStatus() != null) {
 			return "/tickets/create";
 		}
 		
-		ticketService.create(newTicket);
+		ticket.setStatus("da fare");
+		ticketService.create(ticket);
 		return "redirect:/tickets";
 	}
 	
