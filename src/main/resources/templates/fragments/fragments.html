@@ -23,7 +23,7 @@
 			</div>
 		</header>
 		<!-- Sidebar -->
-		<th:block th:fragment="sidebar">
+		<th:block th:fragment="sidebar(title)">
 			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-secondary" id="sidebar">
 			    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
 			      <span class="fs-4">Sidebar</span>
@@ -31,23 +31,23 @@
 			    <hr>
 			    <ul class="nav nav-pills flex-column mb-auto">
 			      <li class="nav-item">
-			        <a href="#" class="nav-link active" aria-current="page">
+			        <a th:href="@{/}" class="nav-link link-body-emphasis" th:classappend="${title == 'Homepage' ? 'active' : 'inactive'}">
 			          Home
 			        </a>
 			      </li>
 			      <li>
-			        <a href="#" class="nav-link link-body-emphasis">
+			        <a th:href="@{/tickets}" class="nav-link link-body-emphasis" th:classappend="${title == 'Tickets' ? 'active' : 'inactive'}">
 			          Tickets
 			        </a>
 			      </li>
 			      <li>
-			        <a href="#" class="nav-link link-body-emphasis">
-			          Operators
+			        <a th:href="@{/users}" class="nav-link link-body-emphasis" th:classappend="${title == 'Operatori' ? 'active' : 'inactive'}">
+			          Operatori
 			        </a>
 			      </li>
 			      <li>
-			        <a href="#" class="nav-link link-body-emphasis">
-			          Notes
+			        <a th:href="@{/notes}" class="nav-link link-body-emphasis" th:classappend="${title == 'Note' ? 'active' : 'inactive'}">
+			          Note
 			        </a>
 			      </li>
 			    </ul>

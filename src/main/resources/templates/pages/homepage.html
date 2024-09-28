@@ -6,11 +6,10 @@
 <body>
 	<header th:replace="~{fragments\fragments :: header}"></header>
     
-    <!-- Content -->
     <main class="d-flex">
 	    <!-- Sidebar -->
-		<th:block th:replace="~{fragments\fragments :: sidebar}"></th:block>
-		
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Homepage')}"></th:block>
+		<!-- Content -->
         <div class="container text-center">
             <h1 class="mt-4">Welcome to the Backoffice Dashboard</h1>
             <p>This is the main area where you can manage your platform.</p>
