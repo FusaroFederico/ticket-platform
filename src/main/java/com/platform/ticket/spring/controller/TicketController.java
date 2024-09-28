@@ -62,7 +62,6 @@ public class TicketController {
 			return "/tickets/create";
 		}
 		
-		ticket.setStatus("da fare");
 		ticketService.create(ticket);
 		return "redirect:/tickets";
 	}

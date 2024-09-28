@@ -29,6 +29,7 @@ public class TicketService {
 	}
 	
 	public Ticket create(Ticket ticket) {
+		ticket.setStatus("da fare");
 		return repository.save(ticket);
 	}
 	
