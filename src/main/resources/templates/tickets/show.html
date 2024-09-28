@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Dettagli Ticket')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'show')}"></th:block>
+		<!-- Content -->
+        <div class="container text-center row">
+            <h1 class="mt-4 mb-3">Dettagli Ticket N°[[ ${ticket.id} ]]</h1>
+            <!-- Ticket card -->
+			<div class="card col-8 mx-auto">
+			  <div class="card-body">
+			    <h5 class="card-title">Oggetto: [[ ${ticket.title} ]]</h5>
+			    <p class="card-text">Descrizione: [[ ${ticket.description} ]]</p>
+			  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item">Stato: [[ ${ticket.status} ]]</li>
+			    <li class="list-group-item">Operatore assegnato: 
+					<a href="#" class="card-link">Nome Operatore</a>
+				</li>
+			    <li class="list-group-item">Data creazione: [[ ${ticket.createdAt} ]]</li>
+			    <li class="list-group-item">Ultimo aggiornamento: [[ ${ticket.updatedAt} ]]</li>
+			  </ul>
+			  <div class="card-footer text-body-secondary py-3">
+			    <a href="#" class="btn btn-primary btn-sm me-3" role="button">Modifica</a>
+			    <a href="#" class="btn btn-success btn-sm" role="button">Another link</a>
+			  </div>
+			</div>
+            <!-- /Ticket card -->
+        </div>
+		<!-- /Content -->
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>
