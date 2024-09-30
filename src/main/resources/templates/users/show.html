@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Dettagli Operatore')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Dettagli Operatore')}"></th:block>
+		<!-- Content -->
+        <div class="container row justify-content-center text-center">
+            <h1 class="mt-4">Dettagli Operatore N°[[ ${operator.id} ]]</h1>
+			<!-- Operator Card -->
+			<div class="card mb-3 col-8 mb-auto px-0">
+			  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img th:src="${operator.profilePicUrl}" class="img-fluid rounded-start" alt="profile pic" style="width: 100%;">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">[[ ${operator.firstName} ]] [[ ${operator.lastName} ]]</h5>
+			        <p class="card-text">Email: [[ ${operator.email} ]]</p>
+			        <p class="card-text">Data registrazione: [[ ${operator.registrationDate} ]]</p>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- /Operator Card -->
+        </div>
+		<!-- /Content -->
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>
