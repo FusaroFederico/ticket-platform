@@ -54,8 +54,8 @@ public class User {
 	private String profilePicUrl;
 	
 	@NotNull
-	@Column(name = "is_available", nullable = false)
-	private boolean isAvailable;
+	@Column(name = "is_active", nullable = false)
+	private boolean isActive;
 	
 	@Column(name = "registration_date", nullable = false, updatable = false)
 	@CreationTimestamp
@@ -95,12 +95,12 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isAvailable() {
-		return isAvailable;
+	public boolean getIsActive() {
+		return isActive;
 	}
 
-	public void setIsAvailable(boolean isAvailable) {
-		this.isAvailable = isAvailable;
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public LocalDateTime getRegistrationDate() {
@@ -133,10 +133,6 @@ public class User {
 
 	public void setProfilePicUrl(String profilePicUrl) {
 		this.profilePicUrl = profilePicUrl;
-	}
-
-	public void setAvailable(boolean isAvailable) {
-		this.isAvailable = isAvailable;
 	}
 
 	public List<Ticket> getTickets() {
