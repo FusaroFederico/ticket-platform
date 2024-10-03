@@ -52,6 +52,7 @@ public class Ticket {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
+	@NotNull
 	private User user;
 	
 	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
