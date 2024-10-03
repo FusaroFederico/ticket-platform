@@ -18,6 +18,10 @@ public class UserService {
 		return repository.findAll();
 	}
 	
+	public List<User> getAllOperators(){
+		return repository.findByRoles_Name("OPERATOR");
+	}
+	
 	public User getById(Integer id) {
 		return repository.findById(id).get();
 	}
@@ -30,7 +34,13 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+	public User updateIsActive(User user, Boolean isActive) {
+		user.setIsActive(isActive);
+		return repository.save(user);
+	}
+	
 	public void deleteById(Integer id) {
 		repository.deleteById(id);
 	}
+	
 }
