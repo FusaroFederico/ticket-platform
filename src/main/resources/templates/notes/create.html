@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Crea Nota')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Crea Nota')}"></th:block>
+		<!-- Content -->
+        <div class="container text-center col-6 my-auto">
+            <h1 class="mt-4">Creazione di una nota per il ticket N°[[ ${ticketId} ]]</h1>
+			<form 
+					id="note-form" 
+					method="POST" 
+					th:action="@{/notes/create/{ticketId}(ticketId = ${ticketId})}" 
+					th:object="${note}"
+					>
+					
+					<div class="mb-3">
+						  <label for="note-message" class="form-label fw-medium">Messaggio:</label>
+						  <textarea class="form-control" id="note-message" rows="3"  th:field="*{message}" 
+						  			th:errorClass="is-invalid"></textarea>
+						  <div th:if="${#fields.hasErrors('message')}" class="invalid-feedback">
+								<ul>
+									<li th:each="err : ${#fields.errors('message')}" th:text="${err}"></li>
+								</ul>
+						  </div>
+					</div>
+					
+					<div class="mb-3 text-center pt-2">
+						<button type="submit" class="btn btn-primary">Crea Nota</button>
+					</div>
+			</form>
+        </div>
+		<!-- /Content -->
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>
