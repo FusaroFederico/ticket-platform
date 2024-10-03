@@ -1,6 +1,5 @@
 package com.platform.ticket.spring.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,11 @@ public class TicketService {
 	}
 	
 	public Ticket update(Ticket ticket) {
-		ticket.setUpdatedAt(LocalDateTime.now());
+		return repository.save(ticket);
+	}
+	
+	public Ticket updateStatus(Ticket ticket, String status) {
+		ticket.setStatus(status);
 		return repository.save(ticket);
 	}
 	
