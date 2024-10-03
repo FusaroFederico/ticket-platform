@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.platform.ticket.spring.model.Ticket;
 import com.platform.ticket.spring.service.TicketService;
+import com.platform.ticket.spring.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -23,6 +24,8 @@ public class TicketController {
 	
 	@Autowired
 	private TicketService ticketService;
+	@Autowired
+	private UserService userService;
 	
 	// INDEX
 	@GetMapping
@@ -49,6 +52,7 @@ public class TicketController {
 	@GetMapping("/create")
 	public String create(Model model) {
 		
+		model.addAttribute("operatorsList", userService.getAllOperators());
 		model.addAttribute("ticket", new Ticket());
 		return "/tickets/create";
 	}
@@ -56,9 +60,11 @@ public class TicketController {
 	@PostMapping("/create")
 	public String store(@Valid @ModelAttribute("ticket") Ticket ticket,
 						BindingResult bindingResult,
-						RedirectAttributes redirectAttributes) {
+						RedirectAttributes redirectAttributes,
+						Model model) {
 		
-		if (bindingResult.hasErrors() && ticket.getStatus() != null) {
+		if (bindingResult.hasFieldErrors("title") || bindingResult.hasFieldErrors("description") || bindingResult.hasFieldErrors("user")) {
+			model.addAttribute("operatorsList", userService.getAllOperators());
 			return "/tickets/create";
 		}
 		
@@ -71,15 +77,18 @@ public class TicketController {
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		
 		model.addAttribute("ticket", ticketService.getById(id));
+		model.addAttribute("operatorsList", userService.getAllOperators());
 		return "/tickets/edit";
 	}
 	
 	@PostMapping("/edit/{id}")
 	public String update(@Valid @ModelAttribute("ticket") Ticket updateTicket,
 						BindingResult bindingResult,
-						RedirectAttributes redirectAttributes) {
+						RedirectAttributes redirectAttributes,
+						Model model) {
 		
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("operatorsList", userService.getAllOperators());
 			return "/tickets/edit";
 		}
 		
@@ -88,4 +97,14 @@ public class TicketController {
 		return "redirect:/tickets/" + updateTicket.getId();
 	}
 	
+	// Update Status
+	@PostMapping("/updateStatus/{id}")
+	public String updateStatus(@PathVariable("id") Integer id,
+							   @RequestParam(name = "status", required = true) String status,
+							   RedirectAttributes redirectAttributes) {
+		
+		ticketService.updateStatus(ticketService.getById(id), status);
+		
+		return "redirect:/tickets/" + id;
+	}
 }
