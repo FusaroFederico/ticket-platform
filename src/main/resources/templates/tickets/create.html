@@ -42,13 +42,19 @@
 					  </div>
 				</div>
 				
-				<!-- <div class="mb-3">
+				<div class="mb-3">
 					<label for="ticket-operator" class="form-label fw-medium">Assegna un operatore:</label>
-					<select class="form-select" id="ticket-operator" th:field="*{user}">
-						<option th:each=" i : ${#numbers.sequence(0, 10)} " th:value="${i}" th:text="${i}">
+					<select class="form-select" id="ticket-operator" th:field="*{user}" th:errorClass="is-invalid">
+						<option selected value="">Seleziona un operatore</option>
+						<option th:each=" operator : ${operatorsList} " th:value="${operator.id}" th:text="${operator.firstName} + ' ' + ${operator.lastName}">
 						    </option>
 					</select>
-				</div> -->
+					<div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('user')}" th:text="${err}"></li>
+							</ul>
+					</div>
+				</div>
 
 				<div class="mb-3 d-flex justify-content-between pt-2">
 					<button type="reset" class="btn btn-warning">Pulisci campi</button>
