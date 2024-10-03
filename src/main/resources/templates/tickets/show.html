@@ -8,30 +8,86 @@
     
     <main class="d-flex">
 	    <!-- Sidebar -->
-		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'show')}"></th:block>
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Dettagli ticket')}"></th:block>
 		<!-- Content -->
-        <div class="container text-center row">
+        <div class="container text-center row mb-auto">
             <h1 class="mt-4 mb-3">Dettagli Ticket N°[[ ${ticket.id} ]]</h1>
             <!-- Ticket card -->
-			<div class="card col-8 mx-auto">
+			<div class="card col-8 mx-auto mb-3">
 			  <div class="card-body">
 			    <h5 class="card-title">Oggetto: [[ ${ticket.title} ]]</h5>
 			    <p class="card-text">Descrizione: [[ ${ticket.description} ]]</p>
 			  </div>
 			  <ul class="list-group list-group-flush">
-			    <li class="list-group-item">Stato: [[ ${ticket.status} ]]</li>
-			    <li class="list-group-item">Operatore assegnato: 
-					<a href="#" class="card-link">Nome Operatore</a>
+			    <li class="list-group-item">
+						<span class="align-middle">Stato: </span>		
+						<span th:if="${ticket.status} == 'da fare'" class="badge text-bg-danger">Da fare</span>
+						<span th:if="${ticket.status} == 'in corso'" class="badge text-bg-warning">In corso</span>
+						<span th:if="${ticket.status} == 'completato'" class="badge text-bg-success">Completato</span>
+						<!-- Update status modal button -->
+						<button sec:authorize="hasAuthority('OPERATOR')" type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
+						  		Aggiorna status
+						</button>
+						<!-- /Update status modal button -->
+						<!-- Modal -->
+						<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h1 class="modal-title fs-5" id="updateStatusModalLabel">
+										Stai aggiornando lo status del ticket N°[[ ${ticket.id} ]]</h1>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+							  <!-- Update status form -->
+							  <form method="post" th:action="@{/tickets/updateStatus/{id}(id = ${ticket.id})}">
+							  		  <div class="modal-body">
+											<input type="radio" class="btn-check" name="ticket-status" id="option1" value="da fare" autocomplete="off" th:field="${ticket.status}">
+											<label class="btn btn-outline-danger" for="option1">Da fare</label>
+		
+											<input type="radio" class="btn-check" name="ticket-status" id="option2" value="in corso" autocomplete="off" th:field="${ticket.status}">
+											<label class="btn btn-outline-warning" for="option2">In corso</label>
+		
+											<input type="radio" class="btn-check" name="ticket-status" id="option3" value="completato" autocomplete="off" th:field="${ticket.status}">
+											<label class="btn btn-outline-success" for="option3">Completato</label>
+								      </div>
+								      <div class="modal-footer">
+								        	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+											<button type="submit" class="btn btn-success">Salva</button>
+								      </div>
+							   </form>
+							   <!-- /Update status form -->
+						    </div>
+						  </div>
+						</div>
+						<!-- /Modal -->
+				</li>
+			    <li class="list-group-item" sec:authorize="hasAuthority('ADMIN')">Operatore assegnato: 
+					<a th:href="@{/users/{id}(id = ${ticket.user.id})}" class="card-link">[[ ${ticket.user.firstName} ]] [[ ${ticket.user.lastName} ]]</a>
 				</li>
 			    <li class="list-group-item">Data creazione: [[ ${ticket.createdAt} ]]</li>
 			    <li class="list-group-item">Ultimo aggiornamento: [[ ${ticket.updatedAt} ]]</li>
 			  </ul>
-			  <div class="card-footer text-body-secondary py-3">
+			  <div class="card-footer text-body-secondary py-3" sec:authorize="hasAuthority('ADMIN')">
 			    <a th:href="@{/tickets/edit/{id}(id = ${ticket.id})}" class="btn btn-primary btn-sm me-3" role="button">Modifica</a>
-			    <a href="#" class="btn btn-success btn-sm" role="button">Another link</a>
 			  </div>
 			</div>
             <!-- /Ticket card -->
+			<!-- Notes -->
+			<h3 class="">Eventuali note</h3>
+			<th:block th:if="${ ticket.notes.size() > 0}">
+				<div class="col-5 mb-3 text-center border border-info rounded bg-body-tertiary mx-auto" th:each=" note : ${ticket.notes}">
+					<p th:text="'Messaggio: ' + ${note.message}"></p>
+					<p>Scritta da: [[${note.user.firstName}]] [[${note.user.lastName}]]</p>
+					<p>Alle: [[ ${note.createdAt} ]]</p>
+				</div>
+			</th:block>
+			<th:block th:unless="${ ticket.notes.size() > 0}">
+				<h5 class="mb-3">Non sono presenti note</h5>
+			</th:block>
+			<div class="mx-auto">
+				<a class="btn btn-info" role="button" th:href="@{/notes/create/{ticketId}(ticketId = ${ticket.id})}">Aggiungi una nota</a>
+			</div>
+			<!-- /Notes -->
         </div>
 		<!-- /Content -->
     </main>
