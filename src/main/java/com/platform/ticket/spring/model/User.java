@@ -55,7 +55,7 @@ public class User {
 	
 	@NotNull
 	@Column(name = "is_active", nullable = false)
-	private boolean isActive;
+	private Boolean isActive;
 	
 	@Column(name = "registration_date", nullable = false, updatable = false)
 	@CreationTimestamp
@@ -99,7 +99,7 @@ public class User {
 		return isActive;
 	}
 
-	public void setIsActive(boolean isActive) {
+	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
 
