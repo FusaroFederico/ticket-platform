@@ -54,13 +54,18 @@
 					<label class="btn btn-outline-success" for="option3">Completato</label>
 				</div>
 				
-				<!-- <div class="mb-3">
+				<div class="mb-3">
 					<label for="ticket-operator" class="form-label fw-medium">Assegna un operatore:</label>
-					<select class="form-select" id="ticket-operator" th:field="*{user}">
-						<option th:each=" i : ${#numbers.sequence(0, 10)} " th:value="${i}" th:text="${i}">
+					<select class="form-select" id="ticket-operator" th:field="*{user}" th:errorClass="is-invalid">
+						<option th:each=" operator : ${operatorsList} " th:value="${operator.id}" th:text="${operator.firstName} + ' ' + ${operator.lastName}">
 						    </option>
 					</select>
-				</div> -->
+					<div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('user')}" th:text="${err}"></li>
+							</ul>
+					</div>
+				</div>
 	
 				<div class="mb-3 d-flex justify-content-center pt-4">
 					<button type="submit" class="btn btn-primary">Aggiorna Ticket</button>
