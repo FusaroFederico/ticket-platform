@@ -42,6 +42,20 @@
 					  </div>
 				</div>
 				
+				<div class="mb-3 row justify-content-center">
+					  <p class="fs-6 fw-medium col-12">Seleziona una o più categorie:</p>
+					  <div class="col-3" th:each=" category : ${categories}" name="categories" th:errorClass="is-invalid">
+						  <input type="checkbox" class="form-check-input" th:id="${'category_' + category.id}"
+						  				th:value="${category.id}" th:field="*{categories}">
+						  <label class="form-check-label" th:for="${'category_' + category.id}" th:text="${category.name}"></label>
+					  </div>
+					  <div th:if="${#fields.hasErrors('categories')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('categories')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
 				<div class="mb-3">
 					<p class="fs-6 fw-medium mb-1">Status:</p>
 					<input type="radio" class="btn-check" name="ticket-status" id="option1" value="da fare" autocomplete="off" th:field="*{status}">
@@ -55,10 +69,10 @@
 				</div>
 				
 				<div class="mb-3">
-					<label for="ticket-operator" class="form-label fw-medium">Assegna un operatore:</label>
+					<label for="ticket-operator" class="form-label fw-medium">Assegna ad un altro Operatore disponibile:</label>
 					<select class="form-select" id="ticket-operator" th:field="*{user}" th:errorClass="is-invalid">
-						<option th:each=" operator : ${operatorsList} " th:value="${operator.id}" th:text="${operator.firstName} + ' ' + ${operator.lastName}">
-						    </option>
+						<option th:each=" operator : ${operatorsList} " th:value="${operator.id}" th:text="${operator.firstName} + ' ' + ${operator.lastName}"
+									th:disabled="${operator.isActive} == true"></option>
 					</select>
 					<div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
 							<ul>
