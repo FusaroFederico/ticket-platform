@@ -15,6 +15,10 @@ public class TicketService {
 	@Autowired
 	private TicketRepository repository;
 
+	public List<Ticket> findAll(){
+		return repository.findAll();
+	}
+	
 	public List<Ticket> findAllSortedByCreationDate(){
 		return repository.findAll(Sort.by("createdAt"));
 	}
