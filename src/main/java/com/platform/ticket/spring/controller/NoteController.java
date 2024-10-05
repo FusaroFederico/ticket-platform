@@ -1,6 +1,7 @@
 package com.platform.ticket.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.platform.ticket.spring.model.Note;
+import com.platform.ticket.spring.security.DatabaseUserDetails;
 import com.platform.ticket.spring.service.NoteService;
 import com.platform.ticket.spring.service.TicketService;
 import com.platform.ticket.spring.service.UserService;
@@ -42,10 +44,11 @@ public class NoteController {
 	
 	@PostMapping("/create/{ticketId}")
 	public String store(@Valid @ModelAttribute("note") Note noteForm,
-							@PathVariable("ticketId") Integer ticketId,
-							BindingResult bindingResult,
-							RedirectAttributes redirectAttributes,
-							Model model) {
+						BindingResult bindingResult,
+						@PathVariable("ticketId") Integer ticketId,
+						RedirectAttributes redirectAttributes,
+						Model model,
+						@AuthenticationPrincipal DatabaseUserDetails userDetails) {
 		
 		
 		if (bindingResult.hasFieldErrors("message")) {
@@ -53,7 +56,7 @@ public class NoteController {
 		    return "/notes/create";
 		}
 		
-		noteForm.setUser(userService.getById(1));
+		noteForm.setUser(userService.getById(userDetails.getId()));
 		noteForm.setTicket(ticketService.getById(ticketId));
 		noteService.create(noteForm);
 		
