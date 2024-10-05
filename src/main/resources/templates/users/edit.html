@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Modifica Profilo')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex align-items-center">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Modifica Profilo')}"></th:block>
+		<!-- Content -->
+        <div class="container text-center col-6">
+            <h1 class="mt-4 mb-3">Aggiorna le informazione del tuo profilo</h1>
+			<!-- Form -->
+			<form class="row g-3 text-start"
+				id="user-form" 
+				method="POST" 
+				th:action="@{/users/edit/profile}" 
+				th:object="${user}"
+				>
+				
+				<div class="col-md-6">
+					  <label for="user-first-name" class="form-label fw-medium">Nome:</label>
+					  <input type="text" class="form-control" id="user-first-name" th:field="*{firstName}"
+					  			 th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('firstName')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="col-md-6">
+					  <label for="user-last-name" class="form-label fw-medium">Cognome:</label>
+					  <input type="text" class="form-control" id="user-last-name" th:field="*{lastName}"
+					  			 th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('lastName')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="col-12">
+					  <label for="user-email" class="form-label fw-medium">Email:</label>
+					  <input type="email" class="form-control" id="user-email" th:field="*{email}" 
+					  			th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="col-12">
+					  <label for="user-profile-pic" class="form-label fw-medium">Url dell'immagine profilo:</label>
+					  <input type="text" class="form-control" id="user-profile-pic" th:field="*{profilePicUrl}" 
+					  			th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('profilePicUrl')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('profilePicUrl')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+			
+				<div class="col-12 d-flex justify-content-center">
+					<button type="submit" class="btn btn-primary">Aggiorna Profilo</button>
+				</div>
+			</form>
+			<!-- /Form -->
+        </div>
+		<!-- /Content -->
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>

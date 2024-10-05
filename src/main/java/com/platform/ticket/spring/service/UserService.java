@@ -39,6 +39,14 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+	public User updateUserInfo(User user, String firstName, String lastName, String email, String profilePicUrl) {
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEmail(email);
+		user.setProfilePicUrl(profilePicUrl);
+		return repository.save(user);
+	}
+	
 	public void deleteById(Integer id) {
 		repository.deleteById(id);
 	}

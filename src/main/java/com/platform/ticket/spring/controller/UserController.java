@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import com.platform.ticket.spring.model.Ticket;
 import com.platform.ticket.spring.model.User;
 import com.platform.ticket.spring.security.DatabaseUserDetails;
 import com.platform.ticket.spring.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
@@ -77,5 +80,27 @@ public class UserController {
 		return "/users/show";
 	}
 	
+	// Edit user profile
+	@GetMapping("/edit/profile")
+	public String editUserProfile(@AuthenticationPrincipal DatabaseUserDetails currentUser, Model model) {
+		
+		model.addAttribute("user", userService.getById(currentUser.getId()));
+		return "/users/edit";
+	}
+	
+	@PostMapping("/edit/profile")
+	public String updateUserProfile(@Valid @ModelAttribute("user") User updateUser,
+									BindingResult bindingResult,
+									RedirectAttributes redirectAttributes,
+									@AuthenticationPrincipal DatabaseUserDetails currentUser) {
+		
+		if (bindingResult.hasFieldErrors("firstName") || bindingResult.hasFieldErrors("lastName") || bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("profilePicUrl")) {
+			return "/users/edit";
+		}
+		
+		userService.updateUserInfo(userService.getById(currentUser.getId()), updateUser.getFirstName(), updateUser.getLastName(), updateUser.getEmail(), updateUser.getProfilePicUrl());
+		redirectAttributes.addFlashAttribute("alertMessage", "Info Profilo aggiornate con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+		return "redirect:/users/profile";
 	}
 }
