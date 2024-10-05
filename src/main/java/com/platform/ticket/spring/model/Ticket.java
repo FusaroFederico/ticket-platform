@@ -13,10 +13,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -57,6 +60,13 @@ public class Ticket {
 	
 	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
 	private List<Note> notes;
+	
+	@ManyToMany
+	@NotEmpty(message = "Seleziona almeno una categoria.")
+	@JoinTable(name = "category_ticket", 
+			   joinColumns = @JoinColumn(name = "ticket_id"), 
+			   inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<Category> categories;
 	
 	// Getters and Setters
 	public Integer getId() {
@@ -121,6 +131,14 @@ public class Ticket {
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 	
 }
