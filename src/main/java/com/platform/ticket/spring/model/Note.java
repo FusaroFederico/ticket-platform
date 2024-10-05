@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,10 +36,12 @@ public class Note {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
+	@JsonBackReference
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "ticket_id", nullable = false)
+	@JsonBackReference
 	private Ticket ticket;
 	
 	// Getters and Setters

@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,9 +31,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull 
 	@Email
-	@Column(name = "email", nullable = false)
+	@NotNull 
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@NotBlank
@@ -62,9 +64,11 @@ public class User {
 	private LocalDateTime registrationDate;
 	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
+	@JsonManagedReference
 	private List<Ticket> tickets;
 	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
+	@JsonManagedReference
 	private List<Note> notes;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
