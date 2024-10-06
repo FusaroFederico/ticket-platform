@@ -75,8 +75,8 @@
 				<li class="list-group-item">
 					Categorie: <span th:each=" category : ${ticket.categories}">[[ ${category.name} ]] </span>
 				</li>
-			    <li class="list-group-item">Data creazione: [[ ${ticket.createdAt} ]]</li>
-			    <li class="list-group-item">Ultimo aggiornamento: [[ ${ticket.updatedAt} ]]</li>
+			    <li class="list-group-item" th:text="${'Data creazione: il ' + #temporals.format(ticket.createdAt, 'dd-MM-yyyy') + ' alle ' + #temporals.format(ticket.createdAt, 'hh:mm')}"></li>
+			    <li class="list-group-item" th:text="${'Ultimo aggiornamento: il ' + #temporals.format(ticket.updatedAt, 'dd-MM-yyyy') + ' alle ' + #temporals.format(ticket.updatedAt, 'hh:mm')}"></li>
 			  </ul>
 			  <div class="card-footer text-body-secondary py-3" sec:authorize="hasAuthority('ADMIN')">
 			    <a th:href="@{/tickets/edit/{id}(id = ${ticket.id})}" class="btn btn-primary btn-sm me-3" role="button">Modifica</a>
@@ -95,7 +95,7 @@
 							   <p class="card-text" th:text="'Messaggio: ' + ${note.message}"></p>
 						  </div>
 						  <div class="card-footer text-body-secondary">
-							   <p class="card-text">In data: [[ ${note.createdAt} ]]</p>
+							   <p class="card-text" th:text="${'Il ' + #temporals.format(note.createdAt, 'dd-MM-yyyy') + ' - Alle ' + #temporals.format(note.createdAt, 'hh:mm')}"></p>
 						  </div>
 					</div>
 				</div>

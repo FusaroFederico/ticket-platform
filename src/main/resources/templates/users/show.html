@@ -11,8 +11,8 @@
 		<th:block th:replace="~{fragments\fragments :: sidebar(${title})}"></th:block>
 		<!-- Content -->
         <div class="container row justify-content-center text-center">
-			<h1 class="mt-4" th:if="${#authentication.principal.id} == ${operator.id}">Profilo Personale</h1>
-            <h1 class="mt-4" th:unless="${#authentication.principal.id} == ${operator.id}" >Dettagli Operatore N°[[ ${operator.id} ]]</h1>
+			<h1 th:if="${#authentication.principal.id} == ${operator.id}">Profilo Personale</h1>
+            <h1 th:unless="${#authentication.principal.id} == ${operator.id}" >Dettagli Operatore N°[[ ${operator.id} ]]</h1>
 			<!-- Alert -->
 			<th:block th:if="${alertMessage} != null">
 				<div class="col-9" th:insert="~{fragments\fragments :: alert(${alertMessage}, ${alertClass})}"></div>
@@ -32,7 +32,7 @@
 						<p class="card-text">Ruoli: <span sec:authentication="principal.authorities"></span></p>
 					</th:block>
 			        <p class="card-text">Email: [[ ${operator.email} ]]</p>
-			        <p class="card-text">Data registrazione: [[ ${operator.registrationDate} ]]</p>
+			        <p class="card-text" >Data registrazione: [[ ${#temporals.format(operator.registrationDate, 'dd-MM-yyyy')} ]]</p>
 					<p class="card-text">
 						Stato:  <span th:if="${operator.isActive}" class="badge text-bg-primary">Attivo</span>
 							    <span th:unless="${operator.isActive}" class="badge text-bg-danger">Non attivo</span>
