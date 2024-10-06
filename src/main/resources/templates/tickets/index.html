@@ -12,6 +12,13 @@
 		
 		<!-- Content -->
         <div class="container text-center px-4">
+			
+			<!-- Alert -->
+			<th:block th:if="${alertMessage} != null">
+				<div class="col-10 mx-auto" th:insert="~{fragments\fragments :: alert(${alertMessage}, ${alertClass})}"></div>
+			</th:block>
+			<!-- /Alert -->
+			
             <h1 class="mt-4 mb-3">Lista dei Ticket</h1>
 			<!-- Search bar -->
 			<div class="col-10 d-flex justify-content-end align-items-baseline mb-3 mx-auto" sec:authorize="hasAuthority('ADMIN')">

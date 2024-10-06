@@ -99,7 +99,7 @@ public class UserController {
 		}
 		
 		userService.updateUserInfo(userService.getById(currentUser.getId()), updateUser.getFirstName(), updateUser.getLastName(), updateUser.getEmail(), updateUser.getProfilePicUrl());
-		redirectAttributes.addFlashAttribute("alertMessage", "Info Profilo aggiornate con successo.");
+		redirectAttributes.addFlashAttribute("alertMessage", "Informazioni personali aggiornate con successo.");
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/users/profile";
 	}

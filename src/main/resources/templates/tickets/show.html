@@ -11,7 +11,15 @@
 		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Dettagli ticket')}"></th:block>
 		<!-- Content -->
         <div class="container text-center row mb-auto">
+
+			<!-- Alert -->
+			<th:block th:if="${alertMessage} != null">
+				<div class="col-8 mx-auto" th:insert="~{fragments\fragments :: alert(${alertMessage}, ${alertClass})}"></div>
+			</th:block>
+			<!-- /Alert -->
+
             <h1 class="mt-4 mb-3">Dettagli Ticket N°[[ ${ticket.id} ]]</h1>
+			
             <!-- Ticket card -->
 			<div class="card col-8 mx-auto mb-3">
 			  <div class="card-body">

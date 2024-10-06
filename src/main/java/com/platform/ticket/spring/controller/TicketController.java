@@ -83,6 +83,8 @@ public class TicketController {
 		}
 		
 		ticketService.create(ticket);
+		redirectAttributes.addFlashAttribute("alertMessage", "Il ticket con titolo '" + ticket.getTitle() + "' è stato creato con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/tickets";
 	}
 	
@@ -109,7 +111,8 @@ public class TicketController {
 		}
 		
 		ticketService.update(updateTicket);
-		
+		redirectAttributes.addFlashAttribute("alertMessage", "Il ticket è stato aggiornato con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/tickets/" + updateTicket.getId();
 	}
 	
@@ -120,7 +123,8 @@ public class TicketController {
 							   RedirectAttributes redirectAttributes) {
 		
 		ticketService.updateStatus(ticketService.getById(id), status);
-		
+		redirectAttributes.addFlashAttribute("alertMessage", "Lo stato del ticket è stato impostato su '" + status + "' con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/tickets/" + id;
 	}
 }

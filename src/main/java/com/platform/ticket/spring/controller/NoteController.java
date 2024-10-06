@@ -59,7 +59,8 @@ public class NoteController {
 		noteForm.setUser(userService.getById(userDetails.getId()));
 		noteForm.setTicket(ticketService.getById(ticketId));
 		noteService.create(noteForm);
-		
+		redirectAttributes.addFlashAttribute("alertMessage", "La nota è stata aggiunta con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/tickets/" + ticketId ;
 	}
 }
