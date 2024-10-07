@@ -71,6 +71,7 @@ public class Ticket {
 	@JoinTable(name = "category_ticket", 
 			   joinColumns = @JoinColumn(name = "ticket_id"), 
 			   inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JsonManagedReference
 	private List<Category> categories;
 	
 	// Getters and Setters

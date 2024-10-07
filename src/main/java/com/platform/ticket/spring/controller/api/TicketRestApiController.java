@@ -23,12 +23,20 @@ public class TicketRestApiController {
 	private TicketService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Ticket>> index(@RequestParam(name = "title", required = false) String title){
+	public ResponseEntity<List<Ticket>> index(@RequestParam(name = "title", required = false) String title,
+											  @RequestParam(name = "category", required = false) String category){
 		
 		List<Ticket> tickets;
 		
-		if ( title != null && !title.isEmpty() ) {
+		if ( ( title != null && !title.isBlank() ) &&  ( category != null && !category.isBlank() )) {
+			tickets = service.findListByTitleAndCategoryName(title, category);
+		
+		} else if ( title != null && !title.isBlank() ){
 			tickets = service.findListByTitle(title);
+			
+		} else if ( category != null && !category.isBlank() ) {
+			tickets = service.findListByCategoryName(category);
+			
 		} else {
 			tickets = service.findAll();
 		}

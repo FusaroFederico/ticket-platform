@@ -27,6 +27,14 @@ public class TicketService {
 		return repository.findByTitleContainingIgnoreCaseOrderByCreatedAtAsc(title);
 	}
 	
+	public List<Ticket> findListByCategoryName(String categoryName){
+		return repository.findByCategories_Name(categoryName);
+	}
+	
+	public List<Ticket> findListByTitleAndCategoryName(String title, String categoryName){
+		return repository.findByTitleContainingIgnoreCaseAndCategories_Name(title, categoryName);
+	}
+	
 	public Ticket getById(Integer id) {
 		return repository.findById(id).get();
 	}

@@ -12,4 +12,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 
 	// custom queries
 	public List<Ticket> findByTitleContainingIgnoreCaseOrderByCreatedAtAsc(String name);
+	
+	public List<Ticket> findByCategories_Name(String categoryName);
+
+	public List<Ticket> findByTitleContainingIgnoreCaseAndCategories_Name(String title, String categoryName);
 }
