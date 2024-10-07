@@ -110,7 +110,7 @@ public class UserController {
 	
 	// Update password field
 	@GetMapping("/updatePassword")
-	public String updatePassword() {
+	public String updatePasswordForm() {
 		return "/users/update-password";
 	}
 	
@@ -121,8 +121,17 @@ public class UserController {
 			 					   RedirectAttributes redirectAttributes,
 			 					   Model model) {
 		
-		if ( !passwordEncoder.matches(oldPassword, currentUser.getPassword()) ) {
+		if ( !passwordEncoder.matches(oldPassword, currentUser.getPassword() ) ) {
 			model.addAttribute("oldPasswordNotMatch", "Password Errata!");
+			return "/users/update-password";
+		}
+		
+		// new password validation
+		if ( newPassword == null || newPassword.isBlank() ) {
+			model.addAttribute("newPasswordError", "Non può essere vuota!");
+			return "/users/update-password";
+		} else if ( newPassword.length() < 8) {
+			model.addAttribute("newPasswordError", "Deve avere almeno 8 caratteri.");
 			return "/users/update-password";
 		}
 		
