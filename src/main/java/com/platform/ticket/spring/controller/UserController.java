@@ -2,6 +2,7 @@ package com.platform.ticket.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	// INDEX
 	@GetMapping
 	public String index(Model model) {
@@ -100,6 +104,30 @@ public class UserController {
 		
 		userService.updateUserInfo(userService.getById(currentUser.getId()), updateUser.getFirstName(), updateUser.getLastName(), updateUser.getEmail(), updateUser.getProfilePicUrl());
 		redirectAttributes.addFlashAttribute("alertMessage", "Informazioni personali aggiornate con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+		return "redirect:/users/profile";
+	}
+	
+	// Update password field
+	@GetMapping("/updatePassword")
+	public String updatePassword() {
+		return "/users/update-password";
+	}
+	
+	@PostMapping("/updatePassword")
+	public String storeNewPassword(@AuthenticationPrincipal DatabaseUserDetails currentUser,
+			 					   @RequestParam(name = "oldPassword", required = true) String oldPassword,
+			 					   @RequestParam(name = "newPassword", required = true) String newPassword,
+			 					   RedirectAttributes redirectAttributes,
+			 					   Model model) {
+		
+		if ( !passwordEncoder.matches(oldPassword, currentUser.getPassword()) ) {
+			model.addAttribute("oldPasswordNotMatch", "Password Errata!");
+			return "/users/update-password";
+		}
+		
+		userService.updatePassword(userService.getById(currentUser.getId()), passwordEncoder.encode(newPassword));
+		redirectAttributes.addFlashAttribute("alertMessage", "Password aggiornata con successo.");
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/users/profile";
 	}

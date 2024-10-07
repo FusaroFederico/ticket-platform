@@ -18,7 +18,7 @@ public class SecurityConfiguration {
 		
 		http
         	.authorizeHttpRequests((requests) -> requests
-        		.requestMatchers("/", "/tickets", "/tickets/{id}", "/tickets/updateStatus/{id}", "/users/updateIsActive", "/users/profile").hasAnyAuthority("OPERATOR", "ADMIN")
+        		.requestMatchers("/", "/tickets", "/tickets/{id}", "/tickets/updateStatus/{id}", "/users/updateIsActive", "/users/profile", "/users/updatePassword").hasAnyAuthority("OPERATOR", "ADMIN")
         		.requestMatchers("/tickets/create", "/tickets/edit/**", "/users", "/users/{id}").hasAuthority("ADMIN")
         		.requestMatchers("/**").permitAll()
 				.anyRequest().authenticated()

@@ -47,6 +47,11 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+	public User updatePassword (User user, String newPassword) {
+		user.setPassword(newPassword);
+		return repository.save(user);
+	}
+	
 	public void deleteById(Integer id) {
 		repository.deleteById(id);
 	}
