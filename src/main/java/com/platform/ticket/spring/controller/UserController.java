@@ -1,6 +1,7 @@
 package com.platform.ticket.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -102,10 +103,19 @@ public class UserController {
 			return "/users/edit";
 		}
 		
-		userService.updateUserInfo(userService.getById(currentUser.getId()), updateUser.getFirstName(), updateUser.getLastName(), updateUser.getEmail(), updateUser.getProfilePicUrl());
-		redirectAttributes.addFlashAttribute("alertMessage", "Informazioni personali aggiornate con successo.");
-		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
-		return "redirect:/users/profile";
+		try {
+			
+			userService.updateUserInfo(userService.getById(currentUser.getId()), updateUser.getFirstName(), updateUser.getLastName(), updateUser.getEmail(), updateUser.getProfilePicUrl());
+			redirectAttributes.addFlashAttribute("alertMessage", "Informazioni personali aggiornate con successo.");
+			redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+			return "redirect:/users/profile";
+			
+		} catch (DataIntegrityViolationException ex) {
+			
+			bindingResult.rejectValue("email" , "error.user", "Email già in uso da un altro account.");
+			return "/users/edit";
+			
+		}
 	}
 	
 	// Update password field
