@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Pagina non trovata')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex align-items-center">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Risorsa non trovata')}"></th:block>
+		<!-- Content -->
+        <div class="container text-center">
+            <h1 class="my-3" >Pagina non trovata!</h1>
+            <p >Spiacenti, non abbiamo trovato la pagina che stai cercando.</p>
+        </div>
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>
