@@ -127,4 +127,16 @@ public class TicketController {
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/tickets/" + id;
 	}
+	
+	// DELETE
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Integer id,
+						 RedirectAttributes redirectAttributes) {
+		
+		ticketService.deleteById(id);
+		
+		redirectAttributes.addFlashAttribute("alertMessage", "Il ticket con id '" + id + "' è stato eliminato con successo.");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+		return "redirect:/tickets";
+	}
 }

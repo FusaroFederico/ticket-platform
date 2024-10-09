@@ -52,7 +52,36 @@
 						</td>
 						<td class="d-flex justify-content-center">
 							<a class="btn btn-primary btn-sm me-3" th:href="@{/tickets/{id}(id = ${ticket.id})}" role="button">Visualizza dettagli</a>
-							<a class="btn btn-success btn-sm" th:href="@{/notes/create/{id}(id = *{id})}" role="button" sec:authorize="hasAuthority('ADMIN')">Aggiungi Nota</a>
+							<a class="btn btn-success btn-sm me-3" th:href="@{/notes/create/{id}(id = *{id})}" role="button" sec:authorize="hasAuthority('ADMIN')">Aggiungi Nota</a>
+							<!-- Delete modal button -->
+							<button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal_' + *{id}">
+							  		Elimina
+							</button>
+							<!-- /Delete modal button -->
+							<!-- Delete Modal -->
+							<div class="modal fade" th:id="'deleteModal_' + *{id}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h1 class="modal-title fs-5" id="updateStatusModalLabel">
+											Sei sicura/o di voler eliminare il ticket con id '[[ ${ticket.id} ]]'?</h1>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+								  <!-- Delete form -->
+								  <form method="post" th:action="@{/tickets/delete/{id}(id = *{id})}">
+								  		  <div class="modal-body">
+												<strong>Attenzione!</strong> Cliccando su conferma eliminerai definitivamente questo ticket.
+									      </div>
+									      <div class="modal-footer">
+									        	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+												<button type="submit" class="btn btn-danger">Conferma</button>
+									      </div>
+								   </form>
+								   <!-- /Delete form -->
+								</div>
+	   						  </div>
+	   						</div>
+	   						<!-- /Delete Modal -->
 						</td>
 					</tr>
 				</tbody>
