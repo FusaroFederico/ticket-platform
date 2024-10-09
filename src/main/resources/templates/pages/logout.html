@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Logout')}">
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary vh-100">
+	
+	<main class="col-md-3 m-auto text-center">
+		
+		<!-- Logout Form -->
+	  <form name="logout" th:action="@{/logout}" method="post">
+	    <h1 class="h3 mb-3 fw-normal">Sei sicuro/a di voler uscire?</h1>
+	    <button class="btn btn-primary w-100 py-2" type="submit">Esci</button>
+	  </form>
+	   <!-- /Logout Form -->
+	   
+	</main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>

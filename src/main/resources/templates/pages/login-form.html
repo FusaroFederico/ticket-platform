@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Login Form')}">
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary vh-100">
+	
+	<main class="col-md-3 m-auto">
+		
+			<!-- Login Form -->
+		  <form name="login-form" th:action="@{/login}" method="post">
+		    <h1 class="h3 mb-3 fw-normal">Accesso Richiesto</h1>
+			
+			<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">    
+	            Username o passwrod errati!
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	        </div>
+	        <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert"> 
+	            Logout avvenuto con successo.
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	        </div>
+			
+		    <div class="form-floating">
+		      <input type="email" class="form-control" id="username" name="username" placeholder="name@example.com" required autofocus>
+		      <label for="username">Email address</label>
+		    </div>
+			
+		    <div class="form-floating mb-3">
+		      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+		      <label for="password">Password</label>
+		    </div>
+	
+		    <button class="btn btn-primary w-100 py-2" type="submit">Accedi</button>
+		  </form>
+		   <!-- /Login Form -->
+	   
+	</main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>

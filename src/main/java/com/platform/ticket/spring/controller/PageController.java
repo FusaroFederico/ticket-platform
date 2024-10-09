@@ -12,4 +12,15 @@ public class PageController {
 	public String homepage() {
 		return "/pages/homepage";
 	}
+	
+	// Get login form
+	@GetMapping("login")
+	public String loginForm() {
+		return "/pages/login-form";
+	}
+	
+	@GetMapping("logout")
+	public String logout() {
+		return "/pages/logout";
+	}
 }
