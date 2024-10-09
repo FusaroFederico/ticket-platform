@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -59,11 +59,11 @@ public class Ticket {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	@NotNull
-	@JsonBackReference
+	@JsonManagedReference
 	private User user;
 	
 	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Note> notes;
 	
 	@ManyToMany

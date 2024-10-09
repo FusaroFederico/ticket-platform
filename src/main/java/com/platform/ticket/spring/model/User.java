@@ -6,7 +6,8 @@ import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -39,6 +40,7 @@ public class User {
 	@NotBlank
 	@Size(min = 8, max = 100)
 	@Column(name = "password", nullable = false)
+	@JsonIgnore
 	private String password;
 	
 	@NotBlank
@@ -53,25 +55,29 @@ public class User {
 	
 	@NotBlank
 	@Column(name = "profile_pic_url", nullable = false)
+	@JsonIgnore
 	private String profilePicUrl;
 	
 	@NotNull
 	@Column(name = "is_active", nullable = false)
+	@JsonIgnore
 	private Boolean isActive;
 	
 	@Column(name = "registration_date", nullable = false, updatable = false)
 	@CreationTimestamp
+	@JsonIgnore
 	private LocalDateTime registrationDate;
 	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
-	@JsonManagedReference
+	@JsonBackReference
 	private List<Ticket> tickets;
 	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Note> notes;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Role> roles;
 	
 	// Getters and Setters

@@ -44,7 +44,7 @@ public class TicketRestApiController {
 		if ( tickets.size() > 0 ) {
 			return new ResponseEntity<List<Ticket>>(tickets, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<List<Ticket>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
