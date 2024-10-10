@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments\fragments :: head(title = 'Crea Operatore')}">
+</head>
+
+<body>
+	<header th:replace="~{fragments\fragments :: header}"></header>
+    
+    <main class="d-flex align-items-center">
+	    <!-- Sidebar -->
+		<th:block th:replace="~{fragments\fragments :: sidebar(title = 'Crea Operatore')}"></th:block>
+		<!-- Content -->
+        <div class="container text-center col-6">
+            <h1 class="mt-4 mb-3">Crea un nuovo Operatore</h1>
+			<!-- Form -->
+			<form class="row g-3 text-start"
+				id="new-operator-form" 
+				method="POST" 
+				th:action="@{/users/create}" 
+				th:object="${newOperator}"
+				>
+				
+				<div class="col-md-6">
+					  <label for="operator-first-name" class="form-label fw-medium">Nome:</label>
+					  <input type="text" class="form-control" id="operator-first-name" th:field="*{firstName}"
+					  			 th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('firstName')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="col-md-6">
+					  <label for="operator-last-name" class="form-label fw-medium">Cognome:</label>
+					  <input type="text" class="form-control" id="operator-last-name" th:field="*{lastName}"
+					  			 th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('lastName')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="col-12">
+					  <label for="operator-email" class="form-label fw-medium">Email:</label>
+					  <input type="email" class="form-control" id="operator-email" th:field="*{email}" 
+					  			th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+				
+				<div class="col-12">
+					  <label for="operator-password" class="form-label fw-medium">Imposta una password:</label>
+					  <input type="password" class="form-control" id="operator-password" th:field="*{password}" 
+					  			th:errorClass="is-invalid">
+					  <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+							</ul>
+					  </div>
+				</div>
+			
+				<div class="col-12 d-flex justify-content-around">
+					<button type="reset" class="btn btn-warning">Pulisci campi</button>
+					<button type="submit" class="btn btn-primary">Crea Operatore</button>
+				</div>
+			</form>
+			<!-- /Form -->
+        </div>
+		<!-- /Content -->
+    </main>
+
+    <th:block th:replace="~{fragments\fragments :: scripts}"></th:block>
+</body>
+</html>

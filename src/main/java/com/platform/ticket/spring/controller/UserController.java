@@ -150,4 +150,41 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 		return "redirect:/users/profile";
 	}
+	
+	// CREATE new user with role Operator
+	@GetMapping("/create")
+	public String create(Model model) {
+		
+		model.addAttribute("newOperator", new User() );
+		
+		return "/users/create";
+	}
+	
+	@PostMapping("/create")
+	public String store(@Valid @ModelAttribute("newOperator") User formOperator,
+						BindingResult bindingResult,
+						RedirectAttributes redirectAttributes) {
+		
+		if ( bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("password") || bindingResult.hasFieldErrors("firstName") || bindingResult.hasFieldErrors("lastName") ) {
+			return "/users/create";
+		}
+		  
+		// set encoded password
+		formOperator.setPassword(  passwordEncoder.encode( formOperator.getPassword() ) );
+		
+		try {
+			
+			userService.createNewOperator(formOperator);
+			redirectAttributes.addFlashAttribute("alertMessage", "L'operatore '" + formOperator.getFirstName() + " " + formOperator.getLastName() + "' è stato inserito correttamente.");
+			redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+			return "redirect:/users";
+			
+		} catch( DataIntegrityViolationException ex ) {
+			
+			bindingResult.rejectValue("email" , "error.newOperator", "Email già in uso da un altro account.");
+			return "/users/create";
+			
+		}
+		
+	}
 }
